@@ -90,6 +90,45 @@ export default function Header() {
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/tools"
+                      className={`text-sm font-medium transition-colors hover:text-primary ${
+                        isActive("/tools") ? "text-primary" : "text-muted-foreground"
+                      }`}
+                    >
+                      Tools
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/resources"
+                      className={`text-sm font-medium transition-colors hover:text-primary ${
+                        isActive("/resources") ? "text-primary" : "text-muted-foreground"
+                      }`}
+                    >
+                      Resources
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/blog"
+                      className={`text-sm font-medium transition-colors hover:text-primary ${
+                        isActive("/blog") ? "text-primary" : "text-muted-foreground"
+                      }`}
+                    >
+                      Blog
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
 
@@ -100,22 +139,6 @@ export default function Header() {
               }`}
             >
               Pricing
-            </Link>
-            <Link
-              to="/about"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive("/about") ? "text-primary" : "text-muted-foreground"
-              }`}
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                isActive("/contact") ? "text-primary" : "text-muted-foreground"
-              }`}
-            >
-              Contact
             </Link>
           </div>
 
@@ -150,14 +173,17 @@ export default function Header() {
                 <Link to="/features/batch-processing" onClick={() => setIsOpen(false)} className="text-lg font-medium">
                   Batch Processing
                 </Link>
+                <Link to="/tools" onClick={() => setIsOpen(false)} className="text-lg font-medium">
+                  Tools
+                </Link>
+                <Link to="/resources" onClick={() => setIsOpen(false)} className="text-lg font-medium">
+                  Resources
+                </Link>
+                <Link to="/blog" onClick={() => setIsOpen(false)} className="text-lg font-medium">
+                  Blog
+                </Link>
                 <Link to="/pricing" onClick={() => setIsOpen(false)} className="text-lg font-medium">
                   Pricing
-                </Link>
-                <Link to="/about" onClick={() => setIsOpen(false)} className="text-lg font-medium">
-                  About
-                </Link>
-                <Link to="/contact" onClick={() => setIsOpen(false)} className="text-lg font-medium">
-                  Contact
                 </Link>
                 <div className="flex flex-col gap-2 mt-4">
                   <Link to="/auth" onClick={() => setIsOpen(false)}>
