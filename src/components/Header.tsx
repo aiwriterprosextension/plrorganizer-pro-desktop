@@ -32,6 +32,53 @@ export default function Header() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
+                  <NavigationMenuTrigger>Dashboard</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/dashboard"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">PLR Library</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              View and manage your PLR content
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/dashboard/license-tracker"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">License Tracker</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Track licenses and restrictions
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/dashboard/analytics"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">ROI Analytics</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              View revenue and ROI metrics
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
                   <NavigationMenuTrigger>Features</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
@@ -268,6 +315,20 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <nav className="flex flex-col gap-4 mt-8">
+                <div className="pt-2 pb-2">
+                  <p className="text-sm font-semibold text-muted-foreground mb-2">Dashboard</p>
+                  <div className="flex flex-col gap-2 ml-4">
+                    <Link to="/dashboard" onClick={() => setIsOpen(false)} className="text-base">
+                      PLR Library
+                    </Link>
+                    <Link to="/dashboard/license-tracker" onClick={() => setIsOpen(false)} className="text-base">
+                      License Tracker
+                    </Link>
+                    <Link to="/dashboard/analytics" onClick={() => setIsOpen(false)} className="text-base">
+                      ROI Analytics
+                    </Link>
+                  </div>
+                </div>
                 <Link to="/features/smart-organization" onClick={() => setIsOpen(false)} className="text-lg font-medium">
                   Smart Organization
                 </Link>
