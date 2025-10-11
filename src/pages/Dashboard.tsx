@@ -2,22 +2,29 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Session } from "@supabase/supabase-js";
-import { FileText, Book, Image, Code, Video, Music, Layout, Package, LogOut } from "lucide-react";
+import { FileText, FolderOpen, Tag, ShieldCheck, Search, LogOut } from "lucide-react";
+import PLRUploadDialog from "@/components/PLRUploadDialog";
+import PLRItemCard from "@/components/PLRItemCard";
+import Header from "@/components/Header";
 
-const categoryIcons = {
-  FileText, Book, Image, Code, Video, Music, Layout, Package
+const categoryIcons: Record<string, any> = {
+  "Articles": FileText,
+  "eBooks": FolderOpen,
+  "Graphics": Tag,
+  "Templates": ShieldCheck,
 };
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { toast } = useToast();
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any[]>([]);
   const [plrItems, setPlrItems] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -60,6 +67,14 @@ export default function Dashboard() {
     navigate("/");
   };
 
+  const filteredItems = plrItems.filter(item => {
+    const matchesSearch = !searchQuery || 
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = !selectedCategory || item.category_id === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -69,72 +84,114 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-background">
-      <header className="border-b bg-card/50 backdrop-blur">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-primary">PLR Organizer Pro</h1>
-          <Button variant="ghost" onClick={handleSignOut}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </Button>
-        </div>
-      </header>
+    <div className="min-h-screen bg-background">
+      <Header />
 
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Welcome back!</h2>
-          <p className="text-muted-foreground">Manage your PLR content library</p>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Your PLR Library</h1>
+            <p className="text-muted-foreground">
+              Manage and organize your PLR content
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <PLRUploadDialog categories={categories} onUploadComplete={loadData} />
+            <Button variant="outline" onClick={handleSignOut}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Sign Out
+            </Button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {categories.map((category) => {
-            const IconComponent = categoryIcons[category.icon as keyof typeof categoryIcons] || Package;
-            const count = plrItems.filter(item => item.category_id === category.id).length;
-            
-            return (
-              <Card key={category.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <IconComponent className="h-5 w-5 text-primary" />
-                    {category.name}
-                  </CardTitle>
-                  <CardDescription>{category.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-2xl font-bold">{count}</p>
-                  <p className="text-sm text-muted-foreground">items</p>
-                </CardContent>
-              </Card>
-            );
-          })}
+        {/* Search and Filter */}
+        <div className="flex gap-4 mb-8">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search PLR items..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent PLR Items</CardTitle>
-            <CardDescription>Your latest additions</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {plrItems.length === 0 ? (
-              <div className="text-center py-8">
-                <Package className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <p className="text-muted-foreground">No PLR items yet. Start adding your content!</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {plrItems.slice(0, 5).map((item) => (
-                  <div key={item.id} className="flex justify-between items-center p-4 border rounded-lg">
-                    <div>
-                      <h3 className="font-semibold">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                    <Button variant="outline" size="sm">View</Button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        {/* Categories Overview */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6">Categories</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {categories.map((category) => {
+              const Icon = categoryIcons[category.name] || FolderOpen;
+              const itemCount = plrItems.filter(
+                (item) => item.category_id === category.id
+              ).length;
+              const isSelected = selectedCategory === category.id;
+
+              return (
+                <Card 
+                  key={category.id}
+                  className={`cursor-pointer transition-all hover:shadow-lg ${isSelected ? 'ring-2 ring-primary' : ''}`}
+                  onClick={() => setSelectedCategory(isSelected ? null : category.id)}
+                >
+                  <CardContent className="p-6">
+                    <Icon className="h-8 w-8 text-primary mb-4" />
+                    <h3 className="text-lg font-semibold mb-2">{category.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      {category.description}
+                    </p>
+                    <p className="text-sm font-medium">
+                      {itemCount} {itemCount === 1 ? 'item' : 'items'}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+          {selectedCategory && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => setSelectedCategory(null)}
+              className="mt-4"
+            >
+              Clear Filter
+            </Button>
+          )}
+        </section>
+
+        {/* PLR Items Grid */}
+        <section className="mt-12">
+          <h2 className="text-2xl font-bold mb-6">
+            {selectedCategory ? 'Filtered' : 'All'} PLR Items ({filteredItems.length})
+          </h2>
+          {filteredItems.length === 0 ? (
+            <Card>
+              <CardContent className="p-12 text-center">
+                <FolderOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground mb-4">
+                  {plrItems.length === 0 
+                    ? "No PLR items yet. Start by uploading your first content!"
+                    : "No items match your search or filter criteria."}
+                </p>
+                {plrItems.length === 0 && (
+                  <PLRUploadDialog categories={categories} onUploadComplete={loadData} />
+                )}
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredItems.map((item) => (
+                <PLRItemCard 
+                  key={item.id} 
+                  item={item} 
+                  categories={categories}
+                  onUpdate={loadData}
+                />
+              ))}
+            </div>
+          )}
+        </section>
       </main>
     </div>
   );
