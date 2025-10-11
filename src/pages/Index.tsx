@@ -11,9 +11,9 @@ const Index = () => {
         <nav className="flex items-center justify-between">
           <img src={logo} alt="PLR Organizer Pro" className="h-12" />
           <div className="flex gap-4">
-            <Link to="/auth">
-              <Button variant="ghost">Sign In</Button>
-            </Link>
+          <Link to="/auth">
+            <Button variant="outline">Sign In</Button>
+          </Link>
             <Link to="/auth">
               <Button>Get Started <ArrowRight className="ml-2 h-4 w-4" /></Button>
             </Link>
