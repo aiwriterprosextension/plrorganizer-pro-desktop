@@ -1,25 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, FolderSearch, Sparkles, Shield, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "@/assets/logo.webp";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useEffect } from "react";
 
 const Index = () => {
+  useEffect(() => {
+    document.title = "PLR Organizer Pro - The Intelligent PLR Content Management System";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Organize, Manage, and Monetize Your PLR Content Effortlessly. The most powerful SaaS platform for managing Private Label Rights content.");
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <img src={logo} alt="PLR Organizer Pro" className="h-12" />
-          <div className="flex gap-4">
-          <Link to="/auth">
-            <Button variant="outline">Sign In</Button>
-          </Link>
-            <Link to="/auth">
-              <Button>Get Started <ArrowRight className="ml-2 h-4 w-4" /></Button>
-            </Link>
-          </div>
-        </nav>
-      </header>
+    <div className="min-h-screen bg-background flex flex-col">
+      <Header />
 
       <main>
         {/* Hero Content */}
@@ -112,12 +109,7 @@ const Index = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t py-12">
-        <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; 2025 PLR Organizer Pro. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
