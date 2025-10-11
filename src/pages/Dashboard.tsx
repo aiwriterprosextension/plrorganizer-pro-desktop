@@ -5,16 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Session } from "@supabase/supabase-js";
-import { FileText, FolderOpen, Tag, ShieldCheck, Search, LogOut } from "lucide-react";
+import { FileText, FolderOpen, Tag, ShieldCheck, Search, LogOut, Book, Image, Layout, Video, Music, Code, Package } from "lucide-react";
 import PLRUploadDialog from "@/components/PLRUploadDialog";
 import PLRItemCard from "@/components/PLRItemCard";
 import Header from "@/components/Header";
 
 const categoryIcons: Record<string, any> = {
   "Articles": FileText,
-  "eBooks": FolderOpen,
-  "Graphics": Tag,
-  "Templates": ShieldCheck,
+  "eBooks": Book,
+  "Graphics": Image,
+  "Templates": Layout,
+  "Videos": Video,
+  "Audio": Music,
+  "Software": Code,
+  "Other": Package,
 };
 
 export default function Dashboard() {
