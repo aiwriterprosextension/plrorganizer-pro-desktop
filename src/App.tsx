@@ -23,6 +23,10 @@ import BrandKit from "./pages/tools/BrandKit";
 import ContentSpinner from "./pages/tools/ContentSpinner";
 import SEOAnalyzer from "./pages/tools/SEOAnalyzer";
 import BatchEditor from "./pages/tools/BatchEditor";
+import ContentSpinnerApp from "./pages/tools/ContentSpinnerApp";
+import SEOAnalyzerApp from "./pages/tools/SEOAnalyzerApp";
+import BrandKitApp from "./pages/tools/BrandKitApp";
+import BatchEditorApp from "./pages/tools/BatchEditorApp";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Cookies from "./pages/Cookies";
@@ -50,6 +54,10 @@ const App = () => (
             <Route path="/tools/content-spinner" element={<ContentSpinner />} />
             <Route path="/tools/seo-analyzer" element={<SEOAnalyzer />} />
             <Route path="/tools/batch-editor" element={<BatchEditor />} />
+            <Route path="/tools/content-spinner/app" element={<ContentSpinnerApp />} />
+            <Route path="/tools/seo-analyzer/app" element={<SEOAnalyzerApp />} />
+            <Route path="/tools/brand-kit/app" element={<BrandKitApp />} />
+            <Route path="/tools/batch-editor/app" element={<BatchEditorApp />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/about" element={<About />} />

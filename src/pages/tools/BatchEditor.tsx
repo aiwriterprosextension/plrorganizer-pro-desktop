@@ -31,7 +31,7 @@ export default function BatchEditor() {
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Button asChild size="lg" className="sm:text-lg">
-              <Link to="/tools/batch-editor">
+              <Link to="/tools/batch-editor/app">
                 Try Batch Editor Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
