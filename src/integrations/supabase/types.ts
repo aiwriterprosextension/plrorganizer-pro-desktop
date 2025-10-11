@@ -184,9 +184,73 @@ export type Database = {
         }
         Relationships: []
       }
+      usage_history: {
+        Row: {
+          created_at: string | null
+          id: string
+          notes: string | null
+          platform: string
+          plr_item_id: string
+          published_at: string | null
+          published_url: string | null
+          revenue_generated: number | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          platform: string
+          plr_item_id: string
+          published_at?: string | null
+          published_url?: string | null
+          revenue_generated?: number | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          platform?: string
+          plr_item_id?: string
+          published_at?: string | null
+          published_url?: string | null
+          revenue_generated?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "usage_history_plr_item_id_fkey"
+            columns: ["plr_item_id"]
+            isOneToOne: false
+            referencedRelation: "plr_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "usage_history_plr_item_id_fkey"
+            columns: ["plr_item_id"]
+            isOneToOne: false
+            referencedRelation: "plr_roi_analytics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
-      [_ in never]: never
+      plr_roi_analytics: {
+        Row: {
+          id: string | null
+          niche: string | null
+          purchase_price: number | null
+          quality_rating: string | null
+          roi_multiplier: number | null
+          seller_name: string | null
+          times_used: number | null
+          title: string | null
+          total_revenue: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

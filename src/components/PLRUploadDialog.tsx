@@ -42,6 +42,7 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
   const [attributionRequired, setAttributionRequired] = useState(false);
   const [licenseExpiresAt, setLicenseExpiresAt] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [aiAssessing, setAiAssessing] = useState(false);
   const { toast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +84,27 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
         .from('plr-files')
         .getPublicUrl(fileName);
 
+      // Optional: AI quality assessment
+      let aiAssessment = null;
+      if (title && description) {
+        setAiAssessing(true);
+        try {
+          const { data: assessData } = await supabase.functions.invoke('assess-quality', {
+            body: { 
+              title, 
+              description: description || title,
+              fileType: file.type 
+            }
+          });
+          aiAssessment = assessData;
+        } catch (aiError) {
+          console.error('AI assessment failed:', aiError);
+          // Continue without AI assessment
+        } finally {
+          setAiAssessing(false);
+        }
+      }
+
       // Create PLR item record
       const { error: insertError } = await supabase
         .from('plr_items')
@@ -101,6 +123,9 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
           purchase_date: purchaseDate || null,
           attribution_required: attributionRequired,
           license_expires_at: licenseExpiresAt || null,
+          quality_rating: aiAssessment?.quality_score || null,
+          niche: aiAssessment?.niche || null,
+          sub_niche: aiAssessment?.sub_niche || null,
         });
 
       if (insertError) throw insertError;
@@ -288,11 +313,11 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button type="submit" disabled={uploading}>
-              {uploading ? (
+            <Button type="submit" disabled={uploading || aiAssessing}>
+              {uploading || aiAssessing ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Uploading...
+                  {aiAssessing ? "Analyzing..." : "Uploading..."}
                 </>
               ) : (
                 "Upload"

@@ -33,12 +33,13 @@ import Terms from "./pages/Terms";
 import Cookies from "./pages/Cookies";
 import NotFound from "./pages/NotFound";
 
-// Lazy load new resource pages
+// Lazy load new resource pages and features
 const Guides = lazy(() => import("./pages/resources/Guides"));
 const Templates = lazy(() => import("./pages/resources/Templates"));
 const FAQ = lazy(() => import("./pages/resources/FAQ"));
 const Support = lazy(() => import("./pages/resources/Support"));
 const LicenseTracker = lazy(() => import("./pages/LicenseTracker"));
+const Analytics = lazy(() => import("./pages/Analytics"));
 
 const queryClient = new QueryClient();
 
@@ -73,6 +74,7 @@ const App = () => (
               <Route path="/resources/faq" element={<FAQ />} />
               <Route path="/resources/support" element={<Support />} />
               <Route path="/dashboard/license-tracker" element={<LicenseTracker />} />
+              <Route path="/dashboard/analytics" element={<Analytics />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import MarkAsUsedDialog from "./MarkAsUsedDialog";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -22,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Download, Edit, Trash2, Loader2, FileText, Shield, AlertTriangle } from "lucide-react";
+import { Download, Edit, Trash2, Loader2, FileText, Shield, AlertTriangle, CheckCircle } from "lucide-react";
 
 interface PLRItemCardProps {
   item: any;
@@ -33,13 +34,33 @@ interface PLRItemCardProps {
 export default function PLRItemCard({ item, categories, onUpdate }: PLRItemCardProps) {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [markUsedOpen, setMarkUsedOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [usageCount, setUsageCount] = useState(0);
   const [title, setTitle] = useState(item.title);
   const [description, setDescription] = useState(item.description || "");
   const [categoryId, setCategoryId] = useState(item.category_id);
   const [licenseType, setLicenseType] = useState(item.license_type || "");
   const [tags, setTags] = useState(item.tags?.join(", ") || "");
   const { toast } = useToast();
+
+  useEffect(() => {
+    loadUsageCount();
+  }, [item.id]);
+
+  const loadUsageCount = async () => {
+    try {
+      const { count, error } = await supabase
+        .from("usage_history")
+        .select("*", { count: "exact", head: true })
+        .eq("plr_item_id", item.id);
+
+      if (error) throw error;
+      setUsageCount(count || 0);
+    } catch (error) {
+      console.error("Error loading usage count:", error);
+    }
+  };
 
   const handleDownload = async () => {
     if (!item.file_url) return;
@@ -211,7 +232,11 @@ export default function PLRItemCard({ item, categories, onUpdate }: PLRItemCardP
             )}
           </div>
         </CardContent>
-        <CardFooter className="flex gap-2">
+        <CardFooter className="flex flex-wrap gap-2">
+          <Button size="sm" variant="outline" onClick={() => setMarkUsedOpen(true)}>
+            <CheckCircle className="h-4 w-4 mr-1" />
+            Mark as Used {usageCount > 0 && `(${usageCount})`}
+          </Button>
           <Button size="sm" variant="outline" onClick={handleDownload}>
             <Download className="h-4 w-4 mr-1" />
             Download
@@ -327,6 +352,18 @@ export default function PLRItemCard({ item, categories, onUpdate }: PLRItemCardP
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Mark as Used Dialog */}
+      <MarkAsUsedDialog
+        open={markUsedOpen}
+        onOpenChange={setMarkUsedOpen}
+        itemId={item.id}
+        itemTitle={item.title}
+        onSuccess={() => {
+          loadUsageCount();
+          onUpdate();
+        }}
+      />
     </>
   );
 }
