@@ -36,6 +36,11 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
   const [categoryId, setCategoryId] = useState("");
   const [licenseType, setLicenseType] = useState("");
   const [tags, setTags] = useState("");
+  const [sellerName, setSellerName] = useState("");
+  const [purchasePrice, setPurchasePrice] = useState("");
+  const [purchaseDate, setPurchaseDate] = useState("");
+  const [attributionRequired, setAttributionRequired] = useState(false);
+  const [licenseExpiresAt, setLicenseExpiresAt] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const { toast } = useToast();
 
@@ -91,6 +96,11 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
           file_url: publicUrl,
           file_type: file.type,
           file_size: file.size,
+          seller_name: sellerName || null,
+          purchase_price: purchasePrice ? parseFloat(purchasePrice) : null,
+          purchase_date: purchaseDate || null,
+          attribution_required: attributionRequired,
+          license_expires_at: licenseExpiresAt || null,
         });
 
       if (insertError) throw insertError;
@@ -106,6 +116,11 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
       setCategoryId("");
       setLicenseType("");
       setTags("");
+      setSellerName("");
+      setPurchasePrice("");
+      setPurchaseDate("");
+      setAttributionRequired(false);
+      setLicenseExpiresAt("");
       setFile(null);
       setOpen(false);
       onUploadComplete();
@@ -193,6 +208,65 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
                 onChange={(e) => setTags(e.target.value)}
                 placeholder="e.g., marketing, social media, templates"
               />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="seller">Seller Name</Label>
+                <Input
+                  id="seller"
+                  value={sellerName}
+                  onChange={(e) => setSellerName(e.target.value)}
+                  placeholder="Where did you buy this?"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="price">Purchase Price ($)</Label>
+                <Input
+                  id="price"
+                  type="number"
+                  step="0.01"
+                  value={purchasePrice}
+                  onChange={(e) => setPurchasePrice(e.target.value)}
+                  placeholder="0.00"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="purchaseDate">Purchase Date</Label>
+                <Input
+                  id="purchaseDate"
+                  type="date"
+                  value={purchaseDate}
+                  onChange={(e) => setPurchaseDate(e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="expiresAt">License Expires</Label>
+                <Input
+                  id="expiresAt"
+                  type="date"
+                  value={licenseExpiresAt}
+                  onChange={(e) => setLicenseExpiresAt(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="attribution"
+                checked={attributionRequired}
+                onChange={(e) => setAttributionRequired(e.target.checked)}
+                className="rounded border-input"
+              />
+              <Label htmlFor="attribution" className="cursor-pointer">
+                Attribution required for this content
+              </Label>
             </div>
 
             <div className="space-y-2">

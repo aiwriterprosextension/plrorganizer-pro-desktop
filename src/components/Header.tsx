@@ -92,29 +92,136 @@ export default function Header() {
                 </NavigationMenuItem>
                 
                 <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to="/tools"
-                      className={`text-sm font-medium transition-colors hover:text-primary ${
-                        isActive("/tools") ? "text-primary" : "text-muted-foreground"
-                      }`}
-                    >
-                      Tools
-                    </Link>
-                  </NavigationMenuLink>
+                  <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/tools/content-spinner"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Content Spinner</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              AI-powered content rewriting
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/tools/seo-analyzer"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">SEO Analyzer</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Optimize content for search
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/tools/brand-kit"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Brand Kit</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Apply consistent branding
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/tools/batch-editor"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Batch Editor</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Bulk text operations
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li className="md:col-span-2">
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/tools"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">View All Tools</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              See the complete tool suite
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
                 
                 <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to="/resources"
-                      className={`text-sm font-medium transition-colors hover:text-primary ${
-                        isActive("/resources") ? "text-primary" : "text-muted-foreground"
-                      }`}
-                    >
-                      Resources
-                    </Link>
-                  </NavigationMenuLink>
+                  <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/resources/guides"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Guides</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Step-by-step tutorials
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/resources/templates"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Templates</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Ready-to-use templates
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/resources/faq"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">FAQ</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Common questions answered
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/resources/support"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Support</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              Get help & contact us
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
                 
                 <NavigationMenuItem>
@@ -173,12 +280,43 @@ export default function Header() {
                 <Link to="/features/batch-processing" onClick={() => setIsOpen(false)} className="text-lg font-medium">
                   Batch Processing
                 </Link>
-                <Link to="/tools" onClick={() => setIsOpen(false)} className="text-lg font-medium">
-                  Tools
-                </Link>
-                <Link to="/resources" onClick={() => setIsOpen(false)} className="text-lg font-medium">
-                  Resources
-                </Link>
+                <div className="pt-4 pb-2">
+                  <p className="text-sm font-semibold text-muted-foreground mb-2">Tools</p>
+                  <div className="flex flex-col gap-2 ml-4">
+                    <Link to="/tools/content-spinner" onClick={() => setIsOpen(false)} className="text-base">
+                      Content Spinner
+                    </Link>
+                    <Link to="/tools/seo-analyzer" onClick={() => setIsOpen(false)} className="text-base">
+                      SEO Analyzer
+                    </Link>
+                    <Link to="/tools/brand-kit" onClick={() => setIsOpen(false)} className="text-base">
+                      Brand Kit
+                    </Link>
+                    <Link to="/tools/batch-editor" onClick={() => setIsOpen(false)} className="text-base">
+                      Batch Editor
+                    </Link>
+                    <Link to="/tools" onClick={() => setIsOpen(false)} className="text-base font-medium">
+                      View All Tools
+                    </Link>
+                  </div>
+                </div>
+                <div className="pt-2 pb-2">
+                  <p className="text-sm font-semibold text-muted-foreground mb-2">Resources</p>
+                  <div className="flex flex-col gap-2 ml-4">
+                    <Link to="/resources/guides" onClick={() => setIsOpen(false)} className="text-base">
+                      Guides
+                    </Link>
+                    <Link to="/resources/templates" onClick={() => setIsOpen(false)} className="text-base">
+                      Templates
+                    </Link>
+                    <Link to="/resources/faq" onClick={() => setIsOpen(false)} className="text-base">
+                      FAQ
+                    </Link>
+                    <Link to="/resources/support" onClick={() => setIsOpen(false)} className="text-base">
+                      Support
+                    </Link>
+                  </div>
+                </div>
                 <Link to="/blog" onClick={() => setIsOpen(false)} className="text-lg font-medium">
                   Blog
                 </Link>

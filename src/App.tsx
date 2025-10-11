@@ -19,6 +19,11 @@ import BlogCategory from "./pages/BlogCategory";
 import BlogPost from "./pages/BlogPost";
 import Tools from "./pages/Tools";
 import Resources from "./pages/Resources";
+import Guides from "./pages/resources/Guides";
+import Templates from "./pages/resources/Templates";
+import FAQ from "./pages/resources/FAQ";
+import Support from "./pages/resources/Support";
+import LicenseTracker from "./pages/LicenseTracker";
 import BrandKit from "./pages/tools/BrandKit";
 import ContentSpinner from "./pages/tools/ContentSpinner";
 import SEOAnalyzer from "./pages/tools/SEOAnalyzer";
@@ -59,6 +64,11 @@ const App = () => (
             <Route path="/tools/brand-kit/app" element={<BrandKitApp />} />
             <Route path="/tools/batch-editor/app" element={<BatchEditorApp />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/resources/guides" element={<Guides />} />
+            <Route path="/resources/templates" element={<Templates />} />
+            <Route path="/resources/faq" element={<FAQ />} />
+            <Route path="/resources/support" element={<Support />} />
+            <Route path="/dashboard/license-tracker" element={<LicenseTracker />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />

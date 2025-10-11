@@ -79,6 +79,7 @@ export type Database = {
       }
       plr_items: {
         Row: {
+          attribution_required: boolean | null
           category_id: string | null
           created_at: string
           description: string | null
@@ -86,15 +87,23 @@ export type Database = {
           file_type: string | null
           file_url: string | null
           id: string
+          license_expires_at: string | null
           license_restrictions: string | null
           license_type: string | null
+          niche: string | null
+          purchase_date: string | null
+          purchase_price: number | null
+          quality_rating: string | null
+          seller_name: string | null
           status: string | null
+          sub_niche: string | null
           tags: string[] | null
           title: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          attribution_required?: boolean | null
           category_id?: string | null
           created_at?: string
           description?: string | null
@@ -102,15 +111,23 @@ export type Database = {
           file_type?: string | null
           file_url?: string | null
           id?: string
+          license_expires_at?: string | null
           license_restrictions?: string | null
           license_type?: string | null
+          niche?: string | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          quality_rating?: string | null
+          seller_name?: string | null
           status?: string | null
+          sub_niche?: string | null
           tags?: string[] | null
           title: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          attribution_required?: boolean | null
           category_id?: string | null
           created_at?: string
           description?: string | null
@@ -118,9 +135,16 @@ export type Database = {
           file_type?: string | null
           file_url?: string | null
           id?: string
+          license_expires_at?: string | null
           license_restrictions?: string | null
           license_type?: string | null
+          niche?: string | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          quality_rating?: string | null
+          seller_name?: string | null
           status?: string | null
+          sub_niche?: string | null
           tags?: string[] | null
           title?: string
           updated_at?: string

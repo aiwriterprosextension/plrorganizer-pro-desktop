@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Download, Edit, Trash2, Loader2, FileText } from "lucide-react";
+import { Download, Edit, Trash2, Loader2, FileText, Shield, AlertTriangle } from "lucide-react";
 
 interface PLRItemCardProps {
   item: any;
@@ -155,15 +155,49 @@ export default function PLRItemCard({ item, categories, onUpdate }: PLRItemCardP
         <CardContent>
           <p className="text-sm text-muted-foreground mb-3">{item.description}</p>
           <div className="space-y-2">
-            {item.categories && (
-              <Badge variant="secondary">{item.categories.name}</Badge>
+            <div className="flex flex-wrap gap-2">
+              {item.categories && (
+                <Badge variant="secondary">{item.categories.name}</Badge>
+              )}
+              {item.license_type && (
+                <Badge variant="default" className="flex items-center gap-1">
+                  <Shield className="h-3 w-3" />
+                  {item.license_type}
+                </Badge>
+              )}
+              {item.quality_rating && (
+                <Badge 
+                  variant={
+                    item.quality_rating === 'A' ? 'default' : 
+                    item.quality_rating === 'B' ? 'secondary' : 
+                    item.quality_rating === 'C' ? 'outline' : 
+                    'destructive'
+                  }
+                >
+                  Quality: {item.quality_rating}
+                </Badge>
+              )}
+            </div>
+            {item.attribution_required && (
+              <div className="flex items-center gap-1 text-warning text-xs">
+                <AlertTriangle className="h-3 w-3" />
+                <span>Attribution required</span>
+              </div>
             )}
-            {item.license_type && (
-              <Badge variant="outline">{item.license_type}</Badge>
+            {item.license_restrictions && item.license_restrictions.length > 0 && (
+              <div className="flex items-center gap-1 text-warning text-xs">
+                <AlertTriangle className="h-3 w-3" />
+                <span>{item.license_restrictions.length} restriction(s)</span>
+              </div>
             )}
             {item.file_size && (
               <p className="text-xs text-muted-foreground">
                 Size: {(item.file_size / 1024).toFixed(2)} KB
+              </p>
+            )}
+            {item.seller_name && (
+              <p className="text-xs text-muted-foreground">
+                Seller: {item.seller_name}
               </p>
             )}
             {item.tags && item.tags.length > 0 && (
