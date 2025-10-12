@@ -38,9 +38,11 @@ const Index = () => {
                   Start Free Trial <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="text-lg px-8">
-                Watch Demo
-              </Button>
+              <Link to="/pricing">
+                <Button size="lg" variant="outline" className="text-lg px-8">
+                  View Plans
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -56,37 +58,45 @@ const Index = () => {
             </p>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="p-6 rounded-lg border bg-card hover:shadow-lg transition-shadow">
-                <FolderSearch className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Smart Organization</h3>
-                <p className="text-muted-foreground">
-                  Automatically categorize and organize your PLR content with AI-powered tagging.
-                </p>
-              </div>
+              <Link to="/features/smart-organization">
+                <div className="p-6 rounded-lg border bg-card hover:shadow-lg transition-shadow cursor-pointer">
+                  <FolderSearch className="h-12 w-12 text-primary mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">Smart Organization</h3>
+                  <p className="text-muted-foreground">
+                    Automatically categorize and organize your PLR content with AI-powered tagging.
+                  </p>
+                </div>
+              </Link>
 
-              <div className="p-6 rounded-lg border bg-card hover:shadow-lg transition-shadow">
-                <Sparkles className="h-12 w-12 text-secondary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Content Enhancement</h3>
-                <p className="text-muted-foreground">
-                  Spin, edit, and optimize your content with powerful built-in tools.
-                </p>
-              </div>
+              <Link to="/features/content-enhancement">
+                <div className="p-6 rounded-lg border bg-card hover:shadow-lg transition-shadow cursor-pointer">
+                  <Sparkles className="h-12 w-12 text-secondary mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">Content Enhancement</h3>
+                  <p className="text-muted-foreground">
+                    Spin, edit, and optimize your content with powerful built-in tools.
+                  </p>
+                </div>
+              </Link>
 
-              <div className="p-6 rounded-lg border bg-card hover:shadow-lg transition-shadow">
-                <Shield className="h-12 w-12 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">License Tracking</h3>
-                <p className="text-muted-foreground">
-                  Keep track of usage rights and licenses for every piece of content.
-                </p>
-              </div>
+              <Link to="/features/license-tracking">
+                <div className="p-6 rounded-lg border bg-card hover:shadow-lg transition-shadow cursor-pointer">
+                  <Shield className="h-12 w-12 text-primary mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">License Tracking</h3>
+                  <p className="text-muted-foreground">
+                    Keep track of usage rights and licenses for every piece of content.
+                  </p>
+                </div>
+              </Link>
 
-              <div className="p-6 rounded-lg border bg-card hover:shadow-lg transition-shadow">
-                <Zap className="h-12 w-12 text-secondary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Batch Processing</h3>
-                <p className="text-muted-foreground">
-                  Process multiple files at once with powerful automation workflows.
-                </p>
-              </div>
+              <Link to="/features/batch-processing">
+                <div className="p-6 rounded-lg border bg-card hover:shadow-lg transition-shadow cursor-pointer">
+                  <Zap className="h-12 w-12 text-secondary mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">Batch Processing</h3>
+                  <p className="text-muted-foreground">
+                    Process multiple files at once with powerful automation workflows.
+                  </p>
+                </div>
+              </Link>
             </div>
           </div>
         </section>
@@ -254,13 +264,20 @@ const Index = () => {
               Ready to Transform Your PLR Workflow?
             </h2>
             <p className="text-xl mb-8 opacity-90">
-              Join thousands of content creators who have streamlined their PLR management
+              Join thousands of content creators who have streamlined their PLR management. Try it free for 14 days!
             </p>
-            <Link to="/auth">
-              <Button size="lg" variant="secondary" className="text-lg px-8">
-                Get Started Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/auth">
+                <Button size="lg" variant="secondary" className="text-lg px-8">
+                  Start Free Trial <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link to="/tools">
+                <Button size="lg" variant="outline" className="text-lg px-8 bg-background/50">
+                  Explore AI Tools
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       </main>
