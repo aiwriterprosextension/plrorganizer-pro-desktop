@@ -83,7 +83,7 @@ export default function WatchFolders() {
   };
 
   const handleAddFolder = async () => {
-    if (!window.electron) {
+    if (!window.electronAPI) {
       toast({
         title: 'Desktop Only',
         description: 'This feature requires the desktop app',
@@ -92,8 +92,9 @@ export default function WatchFolders() {
       return;
     }
 
-    const folderPath = await window.electron.selectDirectory();
-    if (!folderPath) return;
+    const paths = await window.electronAPI.openDirectory();
+    if (!paths || paths.length === 0) return;
+    const folderPath = paths[0];
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
@@ -121,8 +122,8 @@ export default function WatchFolders() {
       loadWatchFolders();
 
       // Start watching the folder
-      if (window.electron) {
-        await window.electron.watchDirectory(folderPath);
+      if (window.electronAPI) {
+        await window.electronAPI.watchDirectory(folderPath, folderPath);
       }
     }
   };
@@ -167,8 +168,8 @@ export default function WatchFolders() {
       setDeletingId(null);
 
       // Stop watching the folder
-      if (window.electron) {
-        await window.electron.unwatchDirectory(folderPath);
+      if (window.electronAPI) {
+        await window.electronAPI.unwatchDirectory(folderPath);
       }
     }
   };

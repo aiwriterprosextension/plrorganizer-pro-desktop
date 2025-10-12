@@ -40,6 +40,7 @@ const FAQ = lazy(() => import("./pages/resources/FAQ"));
 const Support = lazy(() => import("./pages/resources/Support"));
 const LicenseTracker = lazy(() => import("./pages/LicenseTracker"));
 const Analytics = lazy(() => import("./pages/Analytics"));
+const WatchFolders = lazy(() => import("./pages/WatchFolders"));
 
 const queryClient = new QueryClient();
 
@@ -75,6 +76,7 @@ const App = () => (
               <Route path="/resources/support" element={<Support />} />
               <Route path="/dashboard/license-tracker" element={<LicenseTracker />} />
               <Route path="/dashboard/analytics" element={<Analytics />} />
+              <Route path="/dashboard/watch-folders" element={<WatchFolders />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />

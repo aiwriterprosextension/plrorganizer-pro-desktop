@@ -399,6 +399,33 @@ export type Database = {
           },
         ]
       }
+      watch_folders: {
+        Row: {
+          auto_import: boolean | null
+          created_at: string | null
+          folder_path: string
+          id: string
+          last_scan: string | null
+          user_id: string
+        }
+        Insert: {
+          auto_import?: boolean | null
+          created_at?: string | null
+          folder_path: string
+          id?: string
+          last_scan?: string | null
+          user_id: string
+        }
+        Update: {
+          auto_import?: boolean | null
+          created_at?: string | null
+          folder_path?: string
+          id?: string
+          last_scan?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       plr_roi_analytics: {

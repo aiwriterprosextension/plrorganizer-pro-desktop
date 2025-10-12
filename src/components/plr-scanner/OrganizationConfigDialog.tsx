@@ -52,10 +52,10 @@ export default function OrganizationConfigDialog({
   });
 
   const handleSelectFolder = async () => {
-    if (window.electron) {
-      const result = await window.electron.selectDirectory();
-      if (result) {
-        setConfig({ ...config, outputBasePath: result });
+    if (window.electronAPI) {
+      const paths = await window.electronAPI.openDirectory();
+      if (paths && paths.length > 0) {
+        setConfig({ ...config, outputBasePath: paths[0] });
       }
     }
   };
