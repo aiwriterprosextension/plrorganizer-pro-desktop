@@ -1,25 +1,67 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Check } from "lucide-react";
-import { useEffect } from "react";
+import { Check, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Pricing() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState<string | null>(null);
+  const [session, setSession] = useState<any>(null);
+
   useEffect(() => {
     document.title = "Pricing Plans - Affordable PLR Content Management | PLR Organizer Pro";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute("content", "Choose the perfect plan for your PLR content management needs. Start with a free trial, upgrade to Pro for advanced features, or scale with Enterprise solutions.");
     }
+
+    // Check authentication status
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
   }, []);
+
+  const handleCheckout = async (priceId: string, planName: string) => {
+    // Check if user is logged in
+    if (!session) {
+      navigate("/auth");
+      return;
+    }
+
+    setIsLoading(planName);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-checkout-session", {
+        body: { priceId, planName },
+      });
+
+      if (error) throw error;
+
+      if (data?.url) {
+        window.open(data.url, "_blank");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to create checkout session",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(null);
+    }
+  };
 
   const plans = [
     {
       name: "Starter",
       price: "$19",
       period: "/month",
+      priceId: "price_starter_monthly", // TODO: Replace with actual Stripe price ID
       description: "Perfect for beginners starting with PLR",
       features: [
         "Up to 500 PLR items",
@@ -34,6 +76,7 @@ export default function Pricing() {
       name: "Professional",
       price: "$49",
       period: "/month",
+      priceId: "price_professional_monthly", // TODO: Replace with actual Stripe price ID
       description: "For serious PLR content creators",
       features: [
         "Unlimited PLR items",
@@ -52,6 +95,7 @@ export default function Pricing() {
       name: "Enterprise",
       price: "$149",
       period: "/month",
+      priceId: "price_enterprise_monthly", // TODO: Replace with actual Stripe price ID
       description: "For teams and agencies",
       features: [
         "Everything in Professional",
@@ -107,14 +151,21 @@ export default function Pricing() {
                       </li>
                     ))}
                   </ul>
-                  <Link to="/auth">
-                    <Button 
-                      className="w-full" 
-                      variant={plan.popular ? "default" : "outline"}
-                    >
-                      Start Free Trial
-                    </Button>
-                  </Link>
+                  <Button 
+                    className="w-full" 
+                    variant={plan.popular ? "default" : "outline"}
+                    onClick={() => handleCheckout(plan.priceId, plan.name)}
+                    disabled={isLoading === plan.name}
+                  >
+                    {isLoading === plan.name ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Loading...
+                      </>
+                    ) : (
+                      "Start Free Trial"
+                    )}
+                  </Button>
                 </CardContent>
               </Card>
             ))}

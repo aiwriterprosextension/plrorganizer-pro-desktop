@@ -43,6 +43,7 @@ const Analytics = lazy(() => import("./pages/Analytics"));
 const WatchFolders = lazy(() => import("./pages/WatchFolders"));
 const Settings = lazy(() => import("./pages/Settings"));
 const Admin = lazy(() => import("./pages/Admin"));
+const Affiliates = lazy(() => import("./pages/Affiliates"));
 
 const queryClient = new QueryClient();
 
@@ -84,6 +85,7 @@ const App = () => (
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/affiliates" element={<Affiliates />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:categorySlug" element={<BlogCategory />} />
               <Route path="/blog/:categorySlug/:postSlug" element={<BlogPost />} />

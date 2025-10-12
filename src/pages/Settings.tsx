@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Loader2 } from "lucide-react";
+import { Loader2, ExternalLink } from "lucide-react";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ export default function Settings() {
   
   // Subscription state
   const [subscription, setSubscription] = useState<any>(null);
+  const [isLoadingPortal, setIsLoadingPortal] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -146,6 +147,38 @@ export default function Settings() {
       });
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleManageSubscription = async () => {
+    if (!session?.user || !subscription?.stripe_customer_id) {
+      toast({
+        title: "Error",
+        description: "No active subscription found",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoadingPortal(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("create-customer-portal-session", {
+        body: { customerId: subscription.stripe_customer_id },
+      });
+
+      if (error) throw error;
+
+      if (data?.url) {
+        window.open(data.url, "_blank");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to open customer portal",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoadingPortal(false);
     }
   };
 
@@ -353,11 +386,32 @@ export default function Settings() {
                         </ul>
                       </div>
 
-                      {subscription.plan_name === "free" && (
-                        <Button className="w-full" onClick={() => navigate("/pricing")}>
-                          Upgrade Plan
-                        </Button>
-                      )}
+                      <div className="flex gap-2">
+                        {subscription.plan_name === "free" ? (
+                          <Button className="w-full" onClick={() => navigate("/pricing")}>
+                            Upgrade Plan
+                          </Button>
+                        ) : (
+                          <Button 
+                            className="w-full" 
+                            variant="outline"
+                            onClick={handleManageSubscription}
+                            disabled={isLoadingPortal || !subscription.stripe_customer_id}
+                          >
+                            {isLoadingPortal ? (
+                              <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Loading...
+                              </>
+                            ) : (
+                              <>
+                                <ExternalLink className="mr-2 h-4 w-4" />
+                                Manage Subscription
+                              </>
+                            )}
+                          </Button>
+                        )}
+                      </div>
                     </>
                   ) : (
                     <p className="text-sm text-muted-foreground">
