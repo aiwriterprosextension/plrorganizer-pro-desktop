@@ -31,13 +31,20 @@ export interface SearchCriteria {
   niche: string;
   contentType: string;
   license: string;
+  quality: string;
   minConfidence: number;
   minSize: number;
   maxSize: number;
+  minPrice: number;
+  maxPrice: number;
   dateFrom: string;
   dateTo: string;
+  purchaseDateFrom: string;
+  purchaseDateTo: string;
   hasNotes: string;
   hasTags: string;
+  isFavorite: string;
+  isUsed: string;
 }
 
 export default function PLRAdvancedSearch({
@@ -50,13 +57,20 @@ export default function PLRAdvancedSearch({
     niche: "all",
     contentType: "all",
     license: "all",
+    quality: "all",
     minConfidence: 0,
     minSize: 0,
     maxSize: 1000,
+    minPrice: 0,
+    maxPrice: 10000,
     dateFrom: "",
     dateTo: "",
+    purchaseDateFrom: "",
+    purchaseDateTo: "",
     hasNotes: "any",
     hasTags: "any",
+    isFavorite: "any",
+    isUsed: "any",
   });
 
   const handleSearch = () => {
@@ -70,13 +84,20 @@ export default function PLRAdvancedSearch({
       niche: "all",
       contentType: "all",
       license: "all",
+      quality: "all",
       minConfidence: 0,
       minSize: 0,
       maxSize: 1000,
+      minPrice: 0,
+      maxPrice: 10000,
       dateFrom: "",
       dateTo: "",
+      purchaseDateFrom: "",
+      purchaseDateTo: "",
       hasNotes: "any",
       hasTags: "any",
+      isFavorite: "any",
+      isUsed: "any",
     });
   };
 
@@ -172,6 +193,25 @@ export default function PLRAdvancedSearch({
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="quality">Quality Rating</Label>
+              <Select
+                value={criteria.quality}
+                onValueChange={(value) => setCriteria({ ...criteria, quality: value })}
+              >
+                <SelectTrigger id="quality">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Ratings</SelectItem>
+                  <SelectItem value="A">A - Excellent</SelectItem>
+                  <SelectItem value="B">B - Good</SelectItem>
+                  <SelectItem value="C">C - Fair</SelectItem>
+                  <SelectItem value="D">D - Poor</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
               <Label>PLR Confidence: {criteria.minConfidence}%+</Label>
               <Slider
                 value={[criteria.minConfidence]}
@@ -212,7 +252,34 @@ export default function PLRAdvancedSearch({
             </div>
           </div>
 
-          {/* Date Range */}
+          {/* Price Range */}
+          <div className="space-y-2">
+            <Label>Purchase Price ($)</Label>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Input
+                  type="number"
+                  placeholder="Min"
+                  value={criteria.minPrice}
+                  onChange={(e) =>
+                    setCriteria({ ...criteria, minPrice: Number(e.target.value) })
+                  }
+                />
+              </div>
+              <div>
+                <Input
+                  type="number"
+                  placeholder="Max"
+                  value={criteria.maxPrice}
+                  onChange={(e) =>
+                    setCriteria({ ...criteria, maxPrice: Number(e.target.value) })
+                  }
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Date Range - Scanned */}
           <div className="space-y-2">
             <Label>Date Range (Scanned)</Label>
             <div className="grid grid-cols-2 gap-4">
@@ -230,6 +297,31 @@ export default function PLRAdvancedSearch({
                   type="date"
                   value={criteria.dateTo}
                   onChange={(e) => setCriteria({ ...criteria, dateTo: e.target.value })}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Date Range - Purchase */}
+          <div className="space-y-2">
+            <Label>Purchase Date Range</Label>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Input
+                  type="date"
+                  value={criteria.purchaseDateFrom}
+                  onChange={(e) =>
+                    setCriteria({ ...criteria, purchaseDateFrom: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <Input
+                  type="date"
+                  value={criteria.purchaseDateTo}
+                  onChange={(e) =>
+                    setCriteria({ ...criteria, purchaseDateTo: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -269,6 +361,42 @@ export default function PLRAdvancedSearch({
                   <SelectItem value="any">Any</SelectItem>
                   <SelectItem value="yes">Yes</SelectItem>
                   <SelectItem value="no">No</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="is-favorite">Favorites</Label>
+              <Select
+                value={criteria.isFavorite}
+                onValueChange={(value) =>
+                  setCriteria({ ...criteria, isFavorite: value })
+                }
+              >
+                <SelectTrigger id="is-favorite">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any</SelectItem>
+                  <SelectItem value="yes">Favorites Only</SelectItem>
+                  <SelectItem value="no">Non-Favorites</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="is-used">Usage Status</Label>
+              <Select
+                value={criteria.isUsed}
+                onValueChange={(value) => setCriteria({ ...criteria, isUsed: value })}
+              >
+                <SelectTrigger id="is-used">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="any">Any</SelectItem>
+                  <SelectItem value="yes">Used</SelectItem>
+                  <SelectItem value="no">Unused</SelectItem>
                 </SelectContent>
               </Select>
             </div>
