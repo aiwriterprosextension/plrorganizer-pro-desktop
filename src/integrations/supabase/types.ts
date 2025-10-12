@@ -439,6 +439,7 @@ export type Database = {
           times_used: number | null
           title: string | null
           total_revenue: number | null
+          user_id: string | null
         }
         Relationships: []
       }
