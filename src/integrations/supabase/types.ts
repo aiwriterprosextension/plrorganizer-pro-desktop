@@ -113,6 +113,39 @@ export type Database = {
         }
         Relationships: []
       }
+      license_keys: {
+        Row: {
+          created_at: string
+          id: string
+          key: string
+          product: string
+          status: string
+          transaction_id: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          key: string
+          product: string
+          status?: string
+          transaction_id: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          key?: string
+          product?: string
+          status?: string
+          transaction_id?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       plr_items: {
         Row: {
           access_count: number | null
