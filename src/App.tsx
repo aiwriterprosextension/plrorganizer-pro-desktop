@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/DashboardEnhanced";
 import SmartOrganization from "./pages/features/SmartOrganization";
 import ContentEnhancement from "./pages/features/ContentEnhancement";
 import LicenseTracking from "./pages/features/LicenseTracking";

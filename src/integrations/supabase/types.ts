@@ -102,6 +102,7 @@ export type Database = {
           purchase_price: number | null
           quality_rating: string | null
           scan_confidence: number | null
+          search_vector: unknown | null
           seller_name: string | null
           status: string | null
           sub_niche: string | null
@@ -135,6 +136,7 @@ export type Database = {
           purchase_price?: number | null
           quality_rating?: string | null
           scan_confidence?: number | null
+          search_vector?: unknown | null
           seller_name?: string | null
           status?: string | null
           sub_niche?: string | null
@@ -168,6 +170,7 @@ export type Database = {
           purchase_price?: number | null
           quality_rating?: string | null
           scan_confidence?: number | null
+          search_vector?: unknown | null
           seller_name?: string | null
           status?: string | null
           sub_niche?: string | null
@@ -205,23 +208,65 @@ export type Database = {
         Row: {
           avatar_url: string | null
           created_at: string
+          dashboard_view_mode: string | null
+          default_sort_by: string | null
+          default_sort_order: string | null
           full_name: string | null
           id: string
+          items_per_page: number | null
           updated_at: string
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          dashboard_view_mode?: string | null
+          default_sort_by?: string | null
+          default_sort_order?: string | null
           full_name?: string | null
           id: string
+          items_per_page?: number | null
           updated_at?: string
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
+          dashboard_view_mode?: string | null
+          default_sort_by?: string | null
+          default_sort_order?: string | null
           full_name?: string | null
           id?: string
+          items_per_page?: number | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      saved_searches: {
+        Row: {
+          created_at: string | null
+          criteria: Json
+          id: string
+          is_pinned: boolean | null
+          name: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          criteria: Json
+          id?: string
+          is_pinned?: boolean | null
+          name: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          criteria?: Json
+          id?: string
+          is_pinned?: boolean | null
+          name?: string
+          updated_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
