@@ -79,73 +79,100 @@ export type Database = {
       }
       plr_items: {
         Row: {
+          access_count: number | null
           attribution_required: boolean | null
           category_id: string | null
           created_at: string
           description: string | null
+          duplicate_of: string | null
+          estimated_value: number | null
           file_size: number | null
           file_type: string | null
           file_url: string | null
           id: string
+          is_duplicate: boolean | null
+          is_favorite: boolean | null
+          last_accessed_at: string | null
           license_expires_at: string | null
           license_restrictions: string | null
           license_type: string | null
           niche: string | null
+          notes: string | null
           purchase_date: string | null
           purchase_price: number | null
           quality_rating: string | null
+          scan_confidence: number | null
           seller_name: string | null
           status: string | null
           sub_niche: string | null
           tags: string[] | null
+          target_folder: string | null
           title: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          access_count?: number | null
           attribution_required?: boolean | null
           category_id?: string | null
           created_at?: string
           description?: string | null
+          duplicate_of?: string | null
+          estimated_value?: number | null
           file_size?: number | null
           file_type?: string | null
           file_url?: string | null
           id?: string
+          is_duplicate?: boolean | null
+          is_favorite?: boolean | null
+          last_accessed_at?: string | null
           license_expires_at?: string | null
           license_restrictions?: string | null
           license_type?: string | null
           niche?: string | null
+          notes?: string | null
           purchase_date?: string | null
           purchase_price?: number | null
           quality_rating?: string | null
+          scan_confidence?: number | null
           seller_name?: string | null
           status?: string | null
           sub_niche?: string | null
           tags?: string[] | null
+          target_folder?: string | null
           title: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          access_count?: number | null
           attribution_required?: boolean | null
           category_id?: string | null
           created_at?: string
           description?: string | null
+          duplicate_of?: string | null
+          estimated_value?: number | null
           file_size?: number | null
           file_type?: string | null
           file_url?: string | null
           id?: string
+          is_duplicate?: boolean | null
+          is_favorite?: boolean | null
+          last_accessed_at?: string | null
           license_expires_at?: string | null
           license_restrictions?: string | null
           license_type?: string | null
           niche?: string | null
+          notes?: string | null
           purchase_date?: string | null
           purchase_price?: number | null
           quality_rating?: string | null
+          scan_confidence?: number | null
           seller_name?: string | null
           status?: string | null
           sub_niche?: string | null
           tags?: string[] | null
+          target_folder?: string | null
           title?: string
           updated_at?: string
           user_id?: string
@@ -156,6 +183,20 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "plr_items_duplicate_of_fkey"
+            columns: ["duplicate_of"]
+            isOneToOne: false
+            referencedRelation: "plr_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "plr_items_duplicate_of_fkey"
+            columns: ["duplicate_of"]
+            isOneToOne: false
+            referencedRelation: "plr_roi_analytics"
             referencedColumns: ["id"]
           },
         ]
@@ -181,6 +222,84 @@ export type Database = {
           full_name?: string | null
           id?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      scan_cache: {
+        Row: {
+          created_at: string | null
+          detected_niche: string | null
+          file_hash: string
+          file_path: string
+          file_size: number | null
+          id: string
+          last_modified: string | null
+          license_type: string | null
+          metadata: Json | null
+          plr_confidence: number | null
+          scan_date: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          detected_niche?: string | null
+          file_hash: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          last_modified?: string | null
+          license_type?: string | null
+          metadata?: Json | null
+          plr_confidence?: number | null
+          scan_date?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          detected_niche?: string | null
+          file_hash?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          last_modified?: string | null
+          license_type?: string | null
+          metadata?: Json | null
+          plr_confidence?: number | null
+          scan_date?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      scan_sessions: {
+        Row: {
+          created_at: string | null
+          id: string
+          plr_detected: number | null
+          scan_date: string | null
+          scan_options: Json | null
+          status: string | null
+          total_files: number | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          plr_detected?: number | null
+          scan_date?: string | null
+          scan_options?: Json | null
+          status?: string | null
+          total_files?: number | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          plr_detected?: number | null
+          scan_date?: string | null
+          scan_options?: Json | null
+          status?: string | null
+          total_files?: number | null
+          user_id?: string
         }
         Relationships: []
       }
