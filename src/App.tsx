@@ -42,6 +42,7 @@ const Support = lazy(() => import("./pages/resources/Support"));
 const LicenseTracker = lazy(() => import("./pages/LicenseTracker"));
 const Analytics = lazy(() => import("./pages/Analytics"));
 const WatchFolders = lazy(() => import("./pages/WatchFolders"));
+const PLRScanner = lazy(() => import("./pages/PLRScanner"));
 const Settings = lazy(() => import("./pages/Settings"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Affiliates = lazy(() => import("./pages/Affiliates"));
@@ -94,6 +95,7 @@ const App = () => (
               <Route path="/dashboard/license-tracker" element={<LicenseTracker />} />
               <Route path="/dashboard/analytics" element={<Analytics />} />
               <Route path="/dashboard/watch-folders" element={<WatchFolders />} />
+              <Route path="/dashboard/plr-scanner" element={<PLRScanner />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/pricing" element={<Pricing />} />
