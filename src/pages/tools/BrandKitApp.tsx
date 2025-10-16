@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Plus, Trash2, Edit, Palette } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
 
@@ -42,6 +43,7 @@ export default function BrandKitApp() {
     fontBody: "Inter"
   });
   const { toast } = useToast();
+  const { trackToolUsage } = useAnalytics();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -109,6 +111,7 @@ export default function BrandKitApp() {
           .eq('id', editingId);
 
         if (error) throw error;
+        trackToolUsage('Brand Kit');
         toast({ title: "Success", description: "Brand kit updated successfully!" });
       } else {
         const { error } = await supabase
@@ -116,6 +119,7 @@ export default function BrandKitApp() {
           .insert([brandKitData]);
 
         if (error) throw error;
+        trackToolUsage('Brand Kit');
         toast({ title: "Success", description: "Brand kit created successfully!" });
       }
 

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { Upload, Loader2 } from "lucide-react";
 
 interface PLRUploadDialogProps {
@@ -44,6 +45,7 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
   const [file, setFile] = useState<File | null>(null);
   const [aiAssessing, setAiAssessing] = useState(false);
   const { toast } = useToast();
+  const { trackPLRUpload } = useAnalytics();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -130,6 +132,7 @@ export default function PLRUploadDialog({ categories, onUploadComplete }: PLRUpl
 
       if (insertError) throw insertError;
 
+      trackPLRUpload(1);
       toast({
         title: "Success",
         description: "PLR item uploaded successfully",

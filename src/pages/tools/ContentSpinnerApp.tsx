@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Slider } from "@/components/ui/slider";
 import { RefreshCw, Copy, Check, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
 
@@ -18,6 +19,7 @@ export default function ContentSpinnerApp() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+  const { trackToolUsage } = useAnalytics();
   const navigate = useNavigate();
 
   const handleSpin = async () => {
@@ -50,6 +52,7 @@ export default function ContentSpinnerApp() {
       if (error) throw error;
 
       setSpunContent(data.spunContent);
+      trackToolUsage('Content Spinner');
       toast({
         title: "Success",
         description: "Content has been rewritten successfully!",

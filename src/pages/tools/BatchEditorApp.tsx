@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ArrowLeft, Search, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
 
@@ -30,6 +31,7 @@ export default function BatchEditorApp() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [hasAnalyzed, setHasAnalyzed] = useState(false);
   const { toast } = useToast();
+  const { trackToolUsage } = useAnalytics();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -180,6 +182,7 @@ export default function BatchEditorApp() {
       });
 
       if (successCount > 0) {
+        trackToolUsage('Batch Editor');
         setFindText("");
         setReplaceText("");
         setHasAnalyzed(false);

@@ -10,6 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { BarChart, ArrowLeft, AlertCircle, CheckCircle, AlertTriangle, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { supabase } from "@/integrations/supabase/client";
 import { Helmet } from "react-helmet-async";
 
@@ -30,6 +31,7 @@ export default function SEOAnalyzerApp() {
   const [analysis, setAnalysis] = useState<SEOAnalysis | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const { toast } = useToast();
+  const { trackToolUsage } = useAnalytics();
   const navigate = useNavigate();
 
   const handleAnalyze = async () => {
@@ -62,6 +64,7 @@ export default function SEOAnalyzerApp() {
       if (error) throw error;
 
       setAnalysis(data);
+      trackToolUsage('SEO Analyzer');
       toast({
         title: "Analysis Complete",
         description: "Your SEO analysis is ready!",
