@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/DashboardEnhanced";
@@ -68,6 +69,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <GoogleAnalytics />
           <PageViewTracker />
           <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
             <Routes>
