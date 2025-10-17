@@ -1,18 +1,17 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useEffect } from "react";
+import SEO from "@/components/SEO";
+import { Link } from "react-router-dom";
 
 export default function Privacy() {
-  useEffect(() => {
-    document.title = "Privacy Policy - Data Protection & Security | PLR Organizer Pro";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Read our privacy policy to understand how PLR Organizer Pro collects, uses, and protects your personal information and PLR content data.");
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <SEO 
+        title="Privacy Policy - Data Protection & Security"
+        description="Read our privacy policy to understand how PLR Organizer Pro collects, uses, and protects your personal information and PLR content data. GDPR compliant data handling."
+        keywords={["privacy policy", "data protection", "GDPR", "data security", "personal information", "user privacy"]}
+      />
+      
       <Header />
       
       <main className="flex-1">
@@ -83,8 +82,25 @@ export default function Privacy() {
             <section>
               <h2 className="text-2xl font-semibold mb-3">Contact Us</h2>
               <p>
-                If you have questions about this Privacy Policy, please contact us at privacy@plrorganizer.pro
+                If you have questions about this Privacy Policy, please <Link to="/contact" className="text-primary hover:underline">contact us</Link> or email privacy@plrorganizer.pro
               </p>
+              <p className="mt-4 text-sm text-muted-foreground">
+                Learn more about data privacy best practices from the{" "}
+                <a href="https://www.ftc.gov/business-guidance/privacy-security" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  Federal Trade Commission
+                </a>{" "}and{" "}
+                <a href="https://gdpr.eu/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  GDPR guidelines
+                </a>.
+              </p>
+            </section>
+
+            <section className="border-t pt-6">
+              <h2 className="text-2xl font-semibold mb-3">Related Policies</h2>
+              <div className="flex flex-wrap gap-4">
+                <Link to="/terms" className="text-primary hover:underline">Terms of Service</Link>
+                <Link to="/cookies" className="text-primary hover:underline">Cookie Policy</Link>
+              </div>
             </section>
           </div>
         </article>

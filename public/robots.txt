@@ -1,3 +1,6 @@
+# robots.txt for PLR Organizer Pro
+
+# Allow all major search engines
 User-agent: Googlebot
 Allow: /
 
@@ -13,5 +16,16 @@ Allow: /
 User-agent: *
 Allow: /
 
-# Sitemap
+# Disallow admin and private areas  
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /auth/
+Disallow: /settings/
+
+# Sitemaps
 Sitemap: https://plrorganizerpro.lovable.app/sitemap.xml
+Sitemap: https://plrorganizerpro.lovable.app/sitemap-auto.xml
+
+# Crawl-delay
+Crawl-delay: 1
+

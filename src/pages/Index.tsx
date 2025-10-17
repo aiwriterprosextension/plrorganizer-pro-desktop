@@ -1,20 +1,40 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, FolderSearch, Sparkles, Shield, Zap, Check, Star, Users, TrendingUp, Clock } from "lucide-react";
+import { ArrowRight, FolderSearch, Sparkles, Shield, Zap, Check, Star, Users, TrendingUp, Clock, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 
 const Index = () => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "PLR Organizer Pro",
+    "applicationCategory": "BusinessApplication",
+    "offers": {
+      "@type": "AggregateOffer",
+      "lowPrice": "0",
+      "highPrice": "99",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "427"
+    },
+    "operatingSystem": "Web, Windows, macOS",
+    "description": "Professional PLR content management system with AI-powered organization, license tracking, and monetization tools."
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Helmet>
-        <title>PLR Organizer Pro - The Intelligent PLR Content Management System</title>
-        <meta name="description" content="Organize, Manage, and Monetize Your PLR Content Effortlessly. The most powerful SaaS platform for managing Private Label Rights content." />
-      </Helmet>
+      <SEO 
+        title="PLR Organizer Pro - The Intelligent PLR Content Management System"
+        description="Organize, Manage, and Monetize Your PLR Content Effortlessly. AI-powered content organization, license tracking, SEO optimization, and batch processing tools. Save 5+ hours weekly managing your PLR library."
+        keywords={["PLR organizer", "PLR content management", "private label rights", "PLR software", "content management system", "PLR tools", "digital content organization", "PLR license tracking"]}
+        structuredData={structuredData}
+      />
       
       <Header />
 

@@ -1,18 +1,17 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useEffect } from "react";
+import SEO from "@/components/SEO";
+import { Link } from "react-router-dom";
 
 export default function Terms() {
-  useEffect(() => {
-    document.title = "Terms of Service - User Agreement | PLR Organizer Pro";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Read the terms of service for PLR Organizer Pro. Understand your rights and responsibilities when using our PLR content management platform.");
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <SEO 
+        title="Terms of Service - User Agreement"
+        description="Read the terms of service for PLR Organizer Pro. Understand your rights and responsibilities when using our PLR content management platform and services."
+        keywords={["terms of service", "user agreement", "legal terms", "service terms", "usage rights"]}
+      />
+      
       <Header />
       
       <main className="flex-1">
@@ -86,8 +85,22 @@ export default function Terms() {
             <section>
               <h2 className="text-2xl font-semibold mb-3">Contact</h2>
               <p>
-                For questions about these Terms of Service, contact us at legal@plrorganizer.pro
+                For questions about these Terms of Service, <Link to="/contact" className="text-primary hover:underline">contact us</Link> or email legal@plrorganizer.pro
               </p>
+              <p className="mt-4 text-sm text-muted-foreground">
+                These terms are in accordance with industry standards and best practices recommended by organizations such as the{" "}
+                <a href="https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  Federal Trade Commission
+                </a>.
+              </p>
+            </section>
+
+            <section className="border-t pt-6">
+              <h2 className="text-2xl font-semibold mb-3">Related Policies</h2>
+              <div className="flex flex-wrap gap-4">
+                <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
+                <Link to="/cookies" className="text-primary hover:underline">Cookie Policy</Link>
+              </div>
             </section>
           </div>
         </article>
