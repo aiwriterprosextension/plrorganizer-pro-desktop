@@ -9,7 +9,6 @@ import { FileText, FolderOpen, Tag, ShieldCheck, Search, LogOut, Book, Image, La
 import PLRUploadDialog from "@/components/PLRUploadDialog";
 import PLRItemCard from "@/components/PLRItemCard";
 import Header from "@/components/Header";
-import { PLRScannerDialog } from "@/components/plr-scanner/PLRScannerDialog";
 
 const categoryIcons: Record<string, any> = {
   "Articles": FileText,
@@ -30,7 +29,6 @@ export default function Dashboard() {
   const [plrItems, setPlrItems] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [showScanner, setShowScanner] = useState(false);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -102,7 +100,7 @@ export default function Dashboard() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Button variant="outline" onClick={() => setShowScanner(true)}>
+            <Button variant="outline" onClick={() => navigate("/dashboard/plr-scanner")}>
               <FolderSearch className="mr-2 h-4 w-4" />
               Scan Computer
             </Button>
@@ -203,12 +201,6 @@ export default function Dashboard() {
           )}
         </section>
       </main>
-
-      <PLRScannerDialog 
-        open={showScanner}
-        onOpenChange={setShowScanner}
-        onImportComplete={loadData}
-      />
     </div>
   );
 }

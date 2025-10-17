@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   Table,
   TableBody,
@@ -19,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, ArrowUpDown, Upload, X } from "lucide-react";
+import { Search, ArrowUpDown, Upload, X, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -34,6 +35,7 @@ interface ScannedFile {
   suggestedNiche?: string;
   licenseType?: string;
   targetFolder?: string;
+  aiReasoning?: string;
 }
 
 interface PLRScanResultsProps {
@@ -327,7 +329,23 @@ export function PLRScanResults({ files: initialFiles, onClose, onImportComplete 
                 </TableCell>
                 <TableCell className="font-medium">{file.name}</TableCell>
                 <TableCell>{formatFileSize(file.size)}</TableCell>
-                <TableCell>{file.plrScore}%</TableCell>
+                <TableCell>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center gap-1 cursor-help">
+                          {file.plrScore}%
+                          {file.aiReasoning && <Info className="h-3 w-3 text-muted-foreground" />}
+                        </div>
+                      </TooltipTrigger>
+                      {file.aiReasoning && (
+                        <TooltipContent className="max-w-sm">
+                          <p className="text-sm">{file.aiReasoning}</p>
+                        </TooltipContent>
+                      )}
+                    </Tooltip>
+                  </TooltipProvider>
+                </TableCell>
                 <TableCell>{getConfidenceBadge(file.confidence)}</TableCell>
                 <TableCell>
                   <Select 

@@ -21,6 +21,8 @@ interface ScannedPackage {
   plrScore?: number;
   confidence?: string;
   suggestedNiche?: string;
+  aiReasoning?: string;
+  suggestedFolder?: string;
 }
 
 export default function PLRScanner() {
@@ -47,6 +49,49 @@ export default function PLRScanner() {
 
     return () => subscription.unsubscribe();
   }, [navigate]);
+
+  const analyzePackage = async (pkg: ScannedPackage) => {
+    try {
+      // Gather package info for AI analysis
+      const fileTypes: Record<string, number> = {};
+      const filenames: string[] = [];
+      
+      const countFiles = (p: ScannedPackage) => {
+        const ext = p.name.split('.').pop()?.toLowerCase() || 'unknown';
+        fileTypes[ext] = (fileTypes[ext] || 0) + 1;
+        filenames.push(p.name);
+        p.children?.forEach(countFiles);
+      };
+      countFiles(pkg);
+
+      const { data, error } = await supabase.functions.invoke('analyze-plr-niche', {
+        body: {
+          folderStructure: { name: pkg.name, type: pkg.type, children: pkg.children?.length || 0 },
+          fileTypes,
+          filenames: filenames.slice(0, 30),
+          metadataContent: null
+        }
+      });
+
+      if (error) throw error;
+
+      return {
+        plrScore: data.confidence || 0,
+        confidence: data.confidence >= 80 ? 'high' : data.confidence >= 50 ? 'medium' : 'low',
+        suggestedNiche: `${data.niche}${data.subNiche ? ' - ' + data.subNiche : ''}`,
+        aiReasoning: data.reasoning,
+        suggestedFolder: data.suggestedFolder
+      };
+    } catch (error) {
+      console.error('AI analysis failed:', error);
+      return {
+        plrScore: 0,
+        confidence: 'low',
+        suggestedNiche: 'Unknown',
+        aiReasoning: 'Analysis failed'
+      };
+    }
+  };
 
   const handleSelectFolder = async () => {
     if (!window.electronAPI?.isElectron) {
@@ -91,12 +136,29 @@ export default function PLRScanner() {
         setProgress((packages.length / files.length) * 100);
       }
 
+      // Analyze each package with AI
+      toast({
+        title: "Analyzing Packages",
+        description: "Using AI to detect niches...",
+      });
+
+      for (let i = 0; i < packages.length; i++) {
+        const pkg = packages[i];
+        try {
+          const analysis = await analyzePackage(pkg);
+          packages[i] = { ...pkg, ...analysis };
+        } catch (error) {
+          console.error('Failed to analyze package:', pkg.name, error);
+        }
+        setProgress(50 + ((i + 1) / packages.length) * 50);
+      }
+
       setScannedPackages(packages);
       setShowResults(true);
       
       toast({
         title: "Scan Complete",
-        description: `Found ${packages.length} PLR packages`,
+        description: `Found ${packages.length} PLR packages with AI analysis`,
       });
     } catch (error) {
       console.error("Scan error:", error);
@@ -182,6 +244,12 @@ export default function PLRScanner() {
               size: pkg.size,
               type: pkg.type,
               selected: false,
+              plrScore: pkg.plrScore,
+              confidence: pkg.confidence,
+              suggestedNiche: pkg.suggestedNiche,
+              aiReasoning: pkg.aiReasoning,
+              licenseType: 'Unknown',
+              targetFolder: pkg.suggestedFolder,
             }))}
             onClose={() => setShowResults(false)}
             onImportComplete={() => {
