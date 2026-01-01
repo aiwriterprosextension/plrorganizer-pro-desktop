@@ -171,7 +171,7 @@ export type Database = {
           purchase_price: number | null
           quality_rating: string | null
           scan_confidence: number | null
-          search_vector: unknown | null
+          search_vector: unknown
           seller_name: string | null
           status: string | null
           sub_niche: string | null
@@ -205,7 +205,7 @@ export type Database = {
           purchase_price?: number | null
           quality_rating?: string | null
           scan_confidence?: number | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           seller_name?: string | null
           status?: string | null
           sub_niche?: string | null
@@ -239,7 +239,7 @@ export type Database = {
           purchase_price?: number | null
           quality_rating?: string | null
           scan_confidence?: number | null
-          search_vector?: unknown | null
+          search_vector?: unknown
           seller_name?: string | null
           status?: string | null
           sub_niche?: string | null
