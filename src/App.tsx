@@ -49,6 +49,13 @@ const Admin = lazy(() => import("./pages/Admin"));
 const Affiliates = lazy(() => import("./pages/Affiliates"));
 const Downloads = lazy(() => import("./pages/Downloads"));
 
+// Sales Funnel Pages
+const SalesPage = lazy(() => import("./pages/funnel/SalesPage"));
+const OTO1 = lazy(() => import("./pages/funnel/OTO1"));
+const OTO2 = lazy(() => import("./pages/funnel/OTO2"));
+const Downsell = lazy(() => import("./pages/funnel/Downsell"));
+const ThankYou = lazy(() => import("./pages/funnel/ThankYou"));
+
 const queryClient = new QueryClient();
 
 // Component to track page views
@@ -112,6 +119,14 @@ const App = () => (
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/cookies" element={<Cookies />} />
+              
+              {/* Sales Funnel Routes */}
+              <Route path="/funnel/sales" element={<SalesPage />} />
+              <Route path="/funnel/oto1" element={<OTO1 />} />
+              <Route path="/funnel/oto2" element={<OTO2 />} />
+              <Route path="/funnel/downsell" element={<Downsell />} />
+              <Route path="/funnel/thank-you" element={<ThankYou />} />
+              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
